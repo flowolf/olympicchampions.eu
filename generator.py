@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import os
+
 from datetime import datetime
 
 import requests
@@ -117,6 +119,11 @@ class Champions(object):
         "sweden",
     )
 
+    def __init__(self):
+        path = os.path.dirname(__file__)
+        self.template = os.path.join(path, "template.html")
+        self.document = os.path.join(path, "index.html")
+
     def get_medals(self):
 
         medals = requests.get("http://www.medalbot.com/api/v1/medals").json()
@@ -186,8 +193,8 @@ class Champions(object):
         return r + '</table>'
 
     def draw_document(self):
-        with open("template.html") as template:
-            with open("index.html", "w") as document:
+        with open(self.template) as template:
+            with open(self.document, "w") as document:
                 document.write(
                     template.read()
                         .replace("{{ table }}", self.get_table())
