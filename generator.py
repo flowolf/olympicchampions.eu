@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from datetime import datetime
+
 import requests
 
 
@@ -187,7 +189,10 @@ class Champions(object):
         with open("template.html") as template:
             with open("index.html", "w") as document:
                 document.write(
-                    template.read().replace("{{ table }}", self.get_table()))
+                    template.read()
+                        .replace("{{ table }}", self.get_table())
+                        .replace("{{ time }}", datetime.utcnow().isoformat())
+                )
 
 if __name__ == "__main__":
     Champions().draw_document()
