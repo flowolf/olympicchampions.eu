@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>Olympic Champions</title>
+    <link rel="stylesheet" type="text/css" href="flags/flags32.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <style>
+      table.champions tr td {
+        line-height: 32px;
+      }
+      .rankings {
+        max-width: 40em;
+        margin: 3em auto;
+      }
+      header {
+        text-align: center;
+      }
+      .linkage {
+        text-align: center;
+      }
+      img.github {
+        width: 32px;
+        margin: 1em;
+      }
+      @media screen and (max-width: 529px) {
+        .hidden-xxs {display: none !important;}
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img src="rio.png" title="Rio 2016" alt="Rio 2016 logo" />
+      <h1><small>We're better together</small></p></h1>
+    </header>
+    <div class="rankings">
+      {{ table }}
+    </div>
+    <div class="linkage">
+      This is a mini project by <a href="http://danielquinn.org/">Daniel Quinn</a>, based on an API written by <a href="https://twitter.com/efkv">Ed Kelley</a>.<br />
+      <a href="https://github.com/danielquinn/olympicchampions.eu"><img src="github.png" class="github" title="The source is on GitHub" alt="GitHub logo" /></a>
+    </div>
+  </body>
+</html>
