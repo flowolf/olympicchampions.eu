@@ -125,8 +125,11 @@ class Champions(object):
         self.document = os.path.join(path, "index.html")
 
     def get_medals(self):
-
-        medals = requests.get("http://www.medalbot.com/api/v1/medals").json()
+        try:
+            medals = requests.get("http://www.medalbot.com/api/v1/medals").json()
+        except:
+	    print("ERROR: error with the medal API")
+            raise
 
         europe = {
             "bronze_count": 0,
@@ -140,7 +143,7 @@ class Champions(object):
         r = []
         for medal in medals:
             if medal["id"] in self.EUROPE:
-                for attribute in ("bronze", "silver", "gold", "total"):
+                for attribute in ("gold", "silver", "bronze", "total"):
                     attribute += "_count"
                     europe[attribute] += medal[attribute]
                 continue
@@ -154,17 +157,17 @@ class Champions(object):
 
     def get_table(self):
 
-        sorted_medals = sorted(
-            self.get_medals(), key=lambda __: __["total_count"])
-
+	sorted_medals = sorted(
+            self.get_medals(), key=lambda __: [__["gold_count"],__["silver_count"],__["bronze_count"]])
+	
         r = (
             '<table class="table table-responsive table-striped champions">'
                 '<tr>'
                     '<th>Rank</th>'
                     '<th colspan="2">Nation</th>'
-                    '<th class="hidden-xxs">Bronze</th>'
-                    '<th class="hidden-xxs">Silver</th>'
                     '<th class="hidden-xxs">Gold</th>'
+                    '<th class="hidden-xxs">Silver</th>'
+                    '<th class="hidden-xxs">Bronze</th>'
                     '<th>Total</th>'
                 '</tr>'
         )
@@ -173,9 +176,9 @@ class Champions(object):
                 '<td class="rank">{}</td>'
                 '<td class="f32"><span class="flag {}"></span></td>'
                 '<td class="name">{}</td>'
-                '<td class="bronze hidden-xxs">{}</td>'
-                '<td class="silver hidden-xxs">{}</td>'
                 '<td class="gold hidden-xxs">{}</td>'
+                '<td class="silver hidden-xxs">{}</td>'
+                '<td class="bronze hidden-xxs">{}</td>'
                 '<td class="total">{}</td>'
             '</tr>'
         )
@@ -184,9 +187,9 @@ class Champions(object):
                 i + 1,
                 self.get_flag(medal["id"]),
                 medal["country_name"],
-                medal["bronze_count"],
-                medal["silver_count"],
                 medal["gold_count"],
+                medal["silver_count"],
+                medal["bronze_count"],
                 medal["total_count"]
             )
 
